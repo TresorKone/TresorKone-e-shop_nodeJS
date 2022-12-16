@@ -1,17 +1,16 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <%- include('./partials/head'); %>
-</head>
-<body>
-    <header>
-        <%- include('./partials/header'); %>
-    </header>
 
-    <main></main>
+<%- include('./partials/head'); %>
 
-    <footer>
-        <%- include('./partials/footer'); %>
-    </footer>
-</body>
-</html>
+<%- include('./partials/header'); %>
+
+    <main class="">
+        <% for (let user of usersArray) { %>
+            <li>
+                <%= user.firstName %>
+            </li>
+        <% } %>
+    </main>
+
+
+<%- include('./partials/footer'); %>
+
