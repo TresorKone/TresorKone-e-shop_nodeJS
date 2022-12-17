@@ -1,11 +1,15 @@
-const User = require('../models').User;
+const User = require('../models').Product;
 //var User = require('../models').User;
 
-exports.getIndex = (req, res, next) => {
+exports.getHome = (req, res, next) => {
+    res.render('home')
+}
+
+exports.getIndexProduct = (req, res, next) => {
     User.findAll()
-        .then(users => {
-            res.render('home', {
-                usersArray: users
+        .then(products => {
+            res.render('product/index', {
+                productArray: products
             });
         })
         .catch(err => {
