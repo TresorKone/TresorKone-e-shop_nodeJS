@@ -18,9 +18,9 @@ exports.getIndexProduct = (req, res, next) => {
 };
 
 exports.getProduct = (req, res, next) => {
-    const prodPk = res.params.;
+    const prodId = req.params.productId
 
-    Product.findByPk(prodPk)
+    Product.findByPk(prodId)
         .then(product => {
             res.render('product/show', {
                 product: product,
