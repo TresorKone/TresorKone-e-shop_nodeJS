@@ -1,4 +1,4 @@
-const User = require('../models').Product;
+const Product = require('../models').Product;
 //var User = require('../models').User;
 
 exports.getHome = (req, res, next) => {
@@ -6,7 +6,7 @@ exports.getHome = (req, res, next) => {
 }
 
 exports.getIndexProduct = (req, res, next) => {
-    User.findAll()
+    Product.findAll()
         .then(products => {
             res.render('product/index', {
                 productArray: products
@@ -15,4 +15,17 @@ exports.getIndexProduct = (req, res, next) => {
         .catch(err => {
             console.log(err)
         });
+};
+
+exports.getProduct = (req, res, next) => {
+    const prodPk = res.params.;
+
+    Product.findByPk(prodPk)
+        .then(product => {
+            res.render('product/show', {
+                product: product,
+                pageTitle: product.name
+            })
+        })
+        .catch(err => console.log(err));
 };
