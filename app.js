@@ -10,6 +10,7 @@ const bodyParser = require('body-parser');
 //imports of my own files
 const userRoutes = require('./src/routes/user');
 const adminRoutes = require('./src/routes/admin')
+const authRoutes = require('./src/routes/auth')
 //imports of my own files
 
 const app = express();
@@ -26,6 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //routes
 app.use(adminRoutes);
 app.use(userRoutes);
+app.use(authRoutes);
 
 app.listen(5000)
 
