@@ -8,4 +8,8 @@ const router = express.Router();
 
 router.get('/login', authController.getLogin);
 
+router.get('/sign', authController.getSign);
+
+router.post('/sign', authController.postSign);
+
 module.exports = router;
