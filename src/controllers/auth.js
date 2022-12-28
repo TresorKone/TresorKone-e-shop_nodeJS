@@ -12,21 +12,30 @@ exports.getLogin = (req, res, next) => {
     res.render('auth/login')
 }
 
-exports.postSign = async (req, res, next) => {
-    try {
-        const {email, password} = req.body;
-        const hash = await bcrypt.hash(password, 10);
-        const user = await new User({
-            email: email,
-            password: hash
-        });
-        user.save().then(
-            res.status(200).json('it\'s work!')
-        )
-    } catch (e) {
-        console.log(e);
-        res.status(500).send('something my be broke')
-    }
+exports.postSign = (req, res, next) => {
+    const email = req.body.email;
+    User.findOne({where: { email: email } })
+        .then(async userCheck => {
+            if (userCheck) {
+                return console.log('already exist');
+            } else {
+                try {
+                    const {email, password} = req.body;
+                    const hash = await bcrypt.hash(password, 10);
+                    const user = await new User({
+                        email: email,
+                        password: hash
+                    });
+                    user.save().then(
+                        res.status(200).json('it\'s work!')
+                    )
+                } catch (e) {
+                    console.log(e);
+                    res.status(500).send('something my be broke')
+                }
+            }
+        })
+
 
     /*
     const email = req.body.email;
