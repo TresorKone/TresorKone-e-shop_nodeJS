@@ -3,7 +3,7 @@ const Product = require('../models').Product;
 
 exports.getHome = (req, res, next) => {
     res.render('home', {
-        isAuthenticated: req.session.isLoggedIn
+        //isAuthenticated: req.session.isLoggedIn
     })
 }
 
@@ -12,7 +12,7 @@ exports.getIndexProduct = (req, res, next) => {
         .then(products => {
             res.render('product/index', {
                 productArray: products,
-                isAuthenticated: req.session.isLoggedIn
+                //isAuthenticated: req.session.isLoggedIn
             });
         })
         .catch(err => {
@@ -28,7 +28,7 @@ exports.getProduct = (req, res, next) => {
             res.render('product/show', {
                 product: product,
                 pageTitle: product.name,
-                isAuthenticated: req.session.isLoggedIn
+                //isAuthenticated: req.session.isLoggedIn
             })
         })
         .catch(err => console.log(err));

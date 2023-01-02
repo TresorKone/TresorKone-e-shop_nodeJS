@@ -40,7 +40,12 @@ app.use(session({
         host: 'localhost',
         connectionLimit: 5
     })
-}))
+}));
+
+app.use((req, res, next) => {
+    res.locals.isAuthenticated = req.session.isLoggedIn;
+    next();
+});
 
 
 //routes
