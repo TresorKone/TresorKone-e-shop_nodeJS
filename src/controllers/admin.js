@@ -2,7 +2,8 @@ const Product = require('../models').Product;
 
 exports.getAddProduct = (req, res, next) => {
     res.render('product/form', {
-        editing: false
+        editing: false,
+        isAuthenticated: req.session.isLoggedIn
     });
 };
 
@@ -39,7 +40,8 @@ exports.getEditProduct = (req, res, next) => {
             }
             res.render('product/form', {
                 editing: editMode,
-                product: product
+                product: product,
+                isAuthenticated: req.session.isLoggedIn
             })
         })
         .catch(err => console.log(err));

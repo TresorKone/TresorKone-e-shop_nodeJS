@@ -12,4 +12,8 @@ router.get('/sign', authController.getSign);
 
 router.post('/sign', authController.postSign);
 
+router.post('/login', authController.postLogin);
+
+router.post('/logout', authController.postLogout);
+
 module.exports = router;

@@ -5,12 +5,14 @@ const path = require("path");
 //third-party package import
 const express = require('express');
 const bodyParser = require('body-parser');
+const session = require('express-session');
+const MariaDBStore = require('express-session-mariadb-store');
 //third-party package import
 
 //imports of my own files
 const userRoutes = require('./src/routes/user');
-const adminRoutes = require('./src/routes/admin')
-const authRoutes = require('./src/routes/auth')
+const adminRoutes = require('./src/routes/admin');
+const authRoutes = require('./src/routes/auth');
 //imports of my own files
 
 const app = express();
@@ -23,6 +25,23 @@ app.set('views', 'views');
 app.use(bodyParser.urlencoded({ extended: false }));
 //this will allow me to serve static file
 app.use(express.static(path.join(__dirname, 'public')));
+//mariaDbStore
+
+//session
+app.use(session({
+    secret: 'secret keyword',
+    resave: false,
+    saveUninitialized: false,
+    store: new MariaDBStore({
+        user: 'root',
+        password: 'databasesql',
+        database: 'e-shop_nodejs',
+        sessionTable: 'session',
+        host: 'localhost',
+        connectionLimit: 5
+    })
+}))
+
 
 //routes
 app.use(adminRoutes);
