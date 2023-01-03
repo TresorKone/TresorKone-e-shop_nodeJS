@@ -7,6 +7,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const MariaDBStore = require('express-session-mariadb-store');
+const csrf = require('csurf');
 //third-party package import
 
 //imports of my own files
@@ -27,6 +28,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 //mariaDbStore
 
+const csrfSetup= csrf();
+
 //session
 app.use(session({
     secret: 'secret keyword',
@@ -42,8 +45,12 @@ app.use(session({
     })
 }));
 
+app.use(csrfSetup);
+
+//locals variable
 app.use((req, res, next) => {
     res.locals.isAuthenticated = req.session.isLoggedIn;
+    res.locals.csrfToken = req.csrfToken();
     next();
 });
 
