@@ -1,7 +1,17 @@
 const bcrypt = require('bcryptjs');
 const flashPackage = require("connect-flash");
+const nodemailer = require('nodemailer');
+const  sendgridTransport = require('nodemailer-sendgrid-transport');
 
 const User = require('../models').User;
+
+//mailer
+const transporter = nodemailer.createTransport(sendgridTransport({
+    auth: {
+        api_key: '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'
+    }
+}));
+
 
 exports.getSign = (req, res, next) => {
     res.render('auth/sign', {
@@ -39,9 +49,20 @@ exports.postSign = (req, res, next) => {
                         password: hash,
                         cart: { items: [] }
                     });
-                    user.save().then(
+                    user.save().then(r => {
                         res.status(200).redirect('/')
-                    )
+                        //TODO:to fix later
+                        /*
+                        return transporter.sendMail({
+                            to: email,
+                            from: 'blueGiant@store.com',
+                            subject: 'welcome in your adventure in the music world',
+                            html: '<h1>successfully signed up</h1>'
+                        });
+                         */
+                    }).catch(err => {
+                        console.log(err);
+                    })
                 } catch (e) {
                     console.log(e);
                     res.status(500).send('something my be broke')
