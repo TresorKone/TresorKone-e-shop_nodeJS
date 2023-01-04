@@ -1,17 +1,25 @@
 const bcrypt = require('bcryptjs');
+const flashPackage = require("connect-flash");
 
 const User = require('../models').User;
 
 exports.getSign = (req, res, next) => {
-    console.log(req.session.isLoggedIn);
     res.render('auth/sign', {
         isAuthenticated: false
     })
 }
 
 exports.getLogin = (req, res, next) => {
+    let flashKey = req.flash('error');
+    if (flashKey.error > 0) {
+        flashKey = flashKey[0]
+    } else {
+        flashKey = null;
+    }
+
     res.render('auth/login', {
-        isAuthenticated: false
+        isAuthenticated: false,
+        errorMessage: flashKey
     })
 }
 
@@ -48,7 +56,8 @@ exports.postLogin = (req, res, next) => {
         User.findOne({where: { email: email } })
             .then(user => {
                 if (!user) {
-                    return res.status(404).json('user not found')
+                    req.flash('error', 'invalid credentials.')
+                    return res.redirect('/login')
                 }
                 bcrypt
                     .compare(password, user.password)

@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const MariaDBStore = require('express-session-mariadb-store');
 const csrf = require('csurf');
+const flashPackage = require('connect-flash');
 //third-party package import
 
 //imports of my own files
@@ -46,6 +47,8 @@ app.use(session({
 }));
 
 app.use(csrfSetup);
+app.use(flashPackage());
+
 
 //locals variable
 app.use((req, res, next) => {
