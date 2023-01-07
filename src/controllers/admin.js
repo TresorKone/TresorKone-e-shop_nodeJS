@@ -16,7 +16,8 @@ exports.postAddProduct = (req, res, next) => {
         name: name,
         description: description,
         imageUrl: imageUrl,
-        price: price
+        price: price,
+        userId: req.session.user.id
     })
         .then(r => {
             console.log('Product Created');
