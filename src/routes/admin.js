@@ -4,13 +4,15 @@ const express = require('express');
 
 const adminController = require('../controllers/admin');
 
-const checkAuth = require('../middleware/check-auth')
+const checkAuth = require('../middleware/check-auth');
+
+const { permit } = require("../middleware/authorization");
 
 const router = express.Router();
 
 router.get('/add-product', checkAuth , adminController.getAddProduct);
 
-router.get('/edit-product/:productId', checkAuth, adminController.getEditProduct);
+router.get('/edit-product/:productId', permit("admin") ,checkAuth, adminController.getEditProduct);
 
 router.post('/add-product', checkAuth, adminController.postAddProduct);
 
