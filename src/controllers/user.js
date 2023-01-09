@@ -21,13 +21,16 @@ exports.getIndexProduct = (req, res, next) => {
 };
 
 exports.getProduct = (req, res, next) => {
-    const prodId = req.params.productId
+    const prodId = req.params.productId;
+
+    const showButtons = req.session.user.role;
 
     Product.findByPk(prodId)
         .then(product => {
             res.render('product/show', {
                 product: product,
                 pageTitle: product.name,
+                showButtons: showButtons
                 //isAuthenticated: req.session.isLoggedIn
             })
         })

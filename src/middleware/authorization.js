@@ -3,7 +3,7 @@ const permit = (...permittedRoles) => {
     return (req, res, next) => {
 
         const currentUser = req.session.user
-        
+
         if (currentUser && permittedRoles.includes(currentUser.role)) {
             next()
         } else {
