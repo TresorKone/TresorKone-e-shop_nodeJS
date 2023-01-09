@@ -13,12 +13,6 @@ const transporter = nodemailer.createTransport(sendgridTransport({
 }));
 
 
-exports.getSign = (req, res, next) => {
-    res.render('auth/sign', {
-        isAuthenticated: false
-    })
-}
-
 exports.getLogin = (req, res, next) => {
     let flashKey = req.flash('error');
     if (flashKey.error > 0) {
@@ -31,7 +25,13 @@ exports.getLogin = (req, res, next) => {
         isAuthenticated: false,
         errorMessage: flashKey
     })
-}
+};
+
+exports.getSign = (req, res, next) => {
+    res.render('auth/sign', {
+        isAuthenticated: false
+    })
+};
 
 exports.postSign = (req, res, next) => {
     const email = req.body.email;
@@ -89,7 +89,8 @@ exports.postLogin = (req, res, next) => {
                             return res.redirect('/')
                             //return res.status(200).json('good password')
                         }
-                        res.json('wrong password')
+                        req.flash('error', 'invalid credentials.')
+                        res.redirect('/login')
                     })
                     .catch(err => {
                         console.log(err);
