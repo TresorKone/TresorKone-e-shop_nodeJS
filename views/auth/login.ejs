@@ -4,10 +4,9 @@
 
 <main class="">
 
-    <%# TODO:fix that later %>
 
-    <% if (errorMessage) { %>
-        <div><%= errorMessage %></div>
+    <% if (authError) { %>
+        <div><%= authError %></div>
      <% } %>
     <form action="/login" method="post">
         <div class="mb-6">

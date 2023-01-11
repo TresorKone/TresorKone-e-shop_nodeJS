@@ -1,3 +1,5 @@
+const { flash } = require('express-flash-message');
+
 const Product = require('../models').Product;
 
 exports.getAddProduct = (req, res, next) => {
@@ -19,10 +21,11 @@ exports.postAddProduct = (req, res, next) => {
         price: price,
         userId: req.session.user.id
     })
-        .then(r => {
+        .then(async r => {
             console.log('Product Created');
+            await req.flash('info', 'product successful added')
             res.redirect('/all-product');
-    })
+        })
         .catch(err => {
             console.log(err);
         });
@@ -62,8 +65,9 @@ exports.postEditProduct = (req, res, next) => {
             product.price = priceEdit;
             return product.save();
         })
-        .then(r => {
+        .then(async r => {
             console.log('Product Updated!');
+            await req.flash('info', 'product successful edited')
             res.redirect('/all-product');
         })
         .catch(err => console.log(err));
@@ -75,9 +79,9 @@ exports.postDeleteProduct = (req, res, next) => {
         .then(product => {
             return product.destroy();
         })
-        .then(result => {
+        .then(r => {
             console.log('Product Deleted');
-            res.redirect('all-product');
+            res.redirect('/all-product');
         })
         .catch(err => console.log(err));
 };

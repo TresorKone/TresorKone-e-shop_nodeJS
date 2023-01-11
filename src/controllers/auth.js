@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
-const flashPackage = require("connect-flash");
 const nodemailer = require('nodemailer');
+const { flash } = require('express-flash-message');
 const  sendgridTransport = require('nodemailer-sendgrid-transport');
 
 const User = require('../models').User;
@@ -13,17 +13,11 @@ const transporter = nodemailer.createTransport(sendgridTransport({
 }));
 
 
-exports.getLogin = (req, res, next) => {
-    let flashKey = req.flash('error');
-    if (flashKey.error > 0) {
-        flashKey = flashKey[0]
-    } else {
-        flashKey = null;
-    }
-
+exports.getLogin = async (req, res, next) => {
+    const authError = await req.consumeFlash('authError')
     res.render('auth/login', {
         isAuthenticated: false,
-        errorMessage: flashKey
+        authError
     })
 };
 
@@ -75,21 +69,22 @@ exports.postLogin = (req, res, next) => {
     try {
         const {email, password} = req.body;
         User.findOne({where: { email: email } })
-            .then(user => {
+            .then(async user => {
                 if (!user) {
-                    req.flash('error', 'invalid credentials.')
+                    await req.flash('authError', 'invalid credential')
                     return res.redirect('/login')
                 }
                 bcrypt
                     .compare(password, user.password)
-                    .then(Match => {
+                    .then(async Match => {
                         if (Match) {
+                            await req.flash('info', 'your are successfully logged')
                             req.session.isLoggedIn = true;
                             req.session.user = user;
                             return res.redirect('/')
                             //return res.status(200).json('good password')
                         }
-                        req.flash('error', 'invalid credentials.')
+                        await req.flash('authError', 'invalid credential')
                         res.redirect('/login')
                     })
                     .catch(err => {
@@ -106,7 +101,7 @@ exports.postLogin = (req, res, next) => {
 }
 
 exports.postLogout = (req, res, next) => {
-    req.session.destroy(err => {
+    req.session.destroy( err => {
         console.log(err);
         res.redirect('/');
     });

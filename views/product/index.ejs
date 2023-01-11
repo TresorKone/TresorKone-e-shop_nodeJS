@@ -6,6 +6,10 @@
 <main class="">
     <h1 class="mb-2 my-10 underline text-2xl text-center font-bold tracking-tight text-gray-900 dark:text-white">All Product</h1>
 
+    <% if (info) { %>
+        <div><%= info %></div>
+    <% } %>
+
     <div class="flex mt-10">
         <% for (let product of productArray) { %>
 

@@ -1,18 +1,23 @@
 const Product = require('../models').Product;
+const { flash } = require('express-flash-message');
 //var User = require('../models').User;
 
-exports.getHome = (req, res, next) => {
+exports.getHome = async (req, res, next) => {
+    const info = await req.consumeFlash('info');
     res.render('home', {
-        //isAuthenticated: req.session.isLoggedIn
+        info
+
+
     })
 }
 
-exports.getIndexProduct = (req, res, next) => {
+exports.getIndexProduct = async (req, res, next) => {
+    const info = await req.consumeFlash('info');
     Product.findAll()
         .then(products => {
             res.render('product/index', {
                 productArray: products,
-                //isAuthenticated: req.session.isLoggedIn
+                info
             });
         })
         .catch(err => {
