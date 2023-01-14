@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
 const { flash } = require('express-flash-message');
 const  sendgridTransport = require('nodemailer-sendgrid-transport');
+const { validationResult } = require('express-validator/check')
 
 const User = require('../models').User;
 
@@ -21,14 +22,35 @@ exports.getLogin = async (req, res, next) => {
     })
 };
 
-exports.getSign = (req, res, next) => {
+exports.getSign = async (req, res, next) => {
+    let message = await req.consumeFlash('error');
+    if (message.length > 0) {
+        message = message[0];
+    } else {
+        message = null;
+    }
+
     res.render('auth/sign', {
-        isAuthenticated: false
+        isAuthenticated: false,
+        signError: message
     })
 };
 
 exports.postSign = (req, res, next) => {
     const email = req.body.email;
+    const signError = validationResult(req);
+
+    if (!signError.isEmpty()) {
+        return res
+            .status(422)
+            .render('auth/sign', {
+                isAuthenticated: false,
+                signError: signError.array()[0].msg
+
+        })
+    }
+
+
     User.findOne({where: { email: email } })
         .then(async userCheck => {
             if (userCheck) {
@@ -36,6 +58,7 @@ exports.postSign = (req, res, next) => {
                 return res.redirect('/login');
             } else {
                 try {
+                    await req.flash('error', 'foe')
                     const {email, password} = req.body;
                     const hash = await bcrypt.hash(password, 10);
                     const user = await new User({
