@@ -16,6 +16,7 @@ router.post('/sign',
     [
         check('email')
             .isEmail()
+            //.normalizeEmail()
             .withMessage('Please enter a valid email.')
             .custom((value, { req }) => {
                 return User.findOne({where: { email: value } })
@@ -26,13 +27,15 @@ router.post('/sign',
                             );
                         }
                     });
-            }),
+            })
+            .normalizeEmail(),
         body(
             'password',
             'Please enter a password with only number and text and at least 5 characters.'
         )
             .isLength({ min: 5 })
             .isAlphanumeric()
+            .trim()
     ]
     ,authController.postSign);
 
