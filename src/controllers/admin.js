@@ -12,12 +12,12 @@ exports.getAddProduct = (req, res, next) => {
 exports.postAddProduct = (req, res, next) => {
     const name = req.body.name;
     const description = req.body.description;
-    const imageUrl = req.body.imageUrl;
+    const image = req.files.image;
     const price = req.body.price;
     Product.create({
         name: name,
         description: description,
-        imageUrl: imageUrl,
+        imageUrl: image.name,
         price: price,
         userId: req.session.user.id
     })
@@ -55,7 +55,7 @@ exports.postEditProduct = (req, res, next) => {
     const prodId = req.body.productId;
     const nameEdit = req.body.name;
     const descriptionEdit = req.body.description;
-    const imageUrlEdit = req.body.imageUrl;
+    const imageUrlEdit = req.file;
     const priceEdit = req.body.price;
     Product.findByPk(prodId)
         .then(product => {

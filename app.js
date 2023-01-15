@@ -9,12 +9,15 @@ const session = require('express-session');
 const MariaDBStore = require('express-session-mariadb-store');
 const csrf = require('csurf');
 const { flash } = require('express-flash-message');
+const fileUpload = require('express-fileupload');
 //third-party package import
 
 //imports of my own files
 const userRoutes = require('./src/routes/user');
 const adminRoutes = require('./src/routes/admin');
 const authRoutes = require('./src/routes/auth');
+const { sampleFile } = require('./src/middleware/fileUpload')
+
 //imports of my own files
 
 const app = express();
@@ -23,8 +26,23 @@ const app = express();
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
+
 //body-parser
 app.use(bodyParser.urlencoded({ extended: false }));
+//body-parser for mixed data(in my case i will use that for file parsing in my form)
+app.use(fileUpload());
+
+let myField = sampleFile;
+let uploadPath = __dirname + '/image' + myField.image.name;
+
+myField.mv(uploadPath)
+    .then(r => {
+        console.log('File uploaded!')
+    })
+    .catch(err => {
+        console.log(err)
+    })
+
 //this will allow me to serve static file
 app.use(express.static(path.join(__dirname, 'public')));
 //mariaDbStore
