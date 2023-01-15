@@ -9,15 +9,19 @@ exports.getAddProduct = (req, res, next) => {
     });
 };
 
-exports.postAddProduct = (req, res, next) => {
+exports.postAddProduct = async (req, res, next) => {
     const name = req.body.name;
     const description = req.body.description;
     const image = req.files.image;
+    const imageName = image.name
     const price = req.body.price;
+
+    await image.mv('./uploads/' + imageName)
+
     Product.create({
         name: name,
         description: description,
-        imageUrl: image.name,
+        imageUrl: image.tempFileDir,
         price: price,
         userId: req.session.user.id
     })
@@ -51,17 +55,21 @@ exports.getEditProduct = (req, res, next) => {
         .catch(err => console.log(err));
 };
 
-exports.postEditProduct = (req, res, next) => {
+exports.postEditProduct = async (req, res, next) => {
     const prodId = req.body.productId;
     const nameEdit = req.body.name;
     const descriptionEdit = req.body.description;
-    const imageUrlEdit = req.file;
+    const image = req.files.image;
+    const imageName = image.name
     const priceEdit = req.body.price;
+
+    await image.mv('./uploads/' + imageName)
+
     Product.findByPk(prodId)
         .then(product => {
             product.name = nameEdit;
             product.description = descriptionEdit;
-            product.imageUrl = imageUrlEdit;
+            product.imageUrl = image.tempFileDir;
             product.price = priceEdit;
             return product.save();
         })

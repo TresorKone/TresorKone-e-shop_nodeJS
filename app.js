@@ -16,7 +16,7 @@ const fileUpload = require('express-fileupload');
 const userRoutes = require('./src/routes/user');
 const adminRoutes = require('./src/routes/admin');
 const authRoutes = require('./src/routes/auth');
-const { sampleFile } = require('./src/middleware/fileUpload')
+
 
 //imports of my own files
 
@@ -31,18 +31,6 @@ app.set('views', 'views');
 app.use(bodyParser.urlencoded({ extended: false }));
 //body-parser for mixed data(in my case i will use that for file parsing in my form)
 app.use(fileUpload());
-
-let myField = sampleFile;
-let uploadPath = __dirname + '/image' + myField.image.name;
-
-myField.mv(uploadPath)
-    .then(r => {
-        console.log('File uploaded!')
-    })
-    .catch(err => {
-        console.log(err)
-    })
-
 //this will allow me to serve static file
 app.use(express.static(path.join(__dirname, 'public')));
 //mariaDbStore
