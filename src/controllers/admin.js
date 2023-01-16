@@ -16,12 +16,12 @@ exports.postAddProduct = async (req, res, next) => {
     const imageName = image.name
     const price = req.body.price;
 
-    await image.mv('./uploads/' + imageName)
+    await image.mv('./public/images/' + imageName)
 
     Product.create({
         name: name,
         description: description,
-        imageUrl: image.tempFileDir,
+        imageUrl: '/images/' + imageName,
         price: price,
         userId: req.session.user.id
     })

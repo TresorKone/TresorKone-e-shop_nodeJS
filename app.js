@@ -29,7 +29,7 @@ app.set('views', 'views');
 
 //body-parser
 app.use(bodyParser.urlencoded({ extended: false }));
-//body-parser for mixed data(in my case i will use that for file parsing in my form)
+//body-parser for mixed data(in my case i will use it for file parsing in my form)
 app.use(fileUpload());
 //this will allow me to serve static file
 app.use(express.static(path.join(__dirname, 'public')));
