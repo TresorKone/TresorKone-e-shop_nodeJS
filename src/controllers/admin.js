@@ -63,13 +63,13 @@ exports.postEditProduct = async (req, res, next) => {
     const imageName = image.name
     const priceEdit = req.body.price;
 
-    await image.mv('./uploads/' + imageName)
+    await image.mv('./public/images/' + imageName)
 
     Product.findByPk(prodId)
         .then(product => {
             product.name = nameEdit;
             product.description = descriptionEdit;
-            product.imageUrl = image.tempFileDir;
+            product.imageUrl = '/images/' + imageName;
             product.price = priceEdit;
             return product.save();
         })

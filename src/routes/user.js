@@ -12,4 +12,8 @@ router.get('/all-product', userController.getIndexProduct);
 
 router.get('/all-product/:productId', userController.getProduct);
 
+router.get('/add-cart/:id', userController.getCart );
+
+router.get('/cart', userController.getCartIndex);
+
 module.exports = router;

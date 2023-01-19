@@ -59,6 +59,7 @@ app.use(flash({ sessionKeyName: 'flashMessage', useCookieSession: true }));
 app.use((req, res, next) => {
     res.locals.isAuthenticated = req.session.isLoggedIn;
     res.locals.csrfToken = req.csrfToken();
+    res.locals.session = req.session;
     next();
 });
 

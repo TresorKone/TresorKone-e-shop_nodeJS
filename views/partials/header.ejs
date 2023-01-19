@@ -21,8 +21,22 @@
                             <li>
                                 <a href="/sign" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white" aria-current="page">SignUp</a>
                             </li>
+                            <li>
+                                <a href="/cart" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white" aria-current="page">Cart</a>
+                                <% if (session.cart) { %>
+                                    <span><%= session.cart.totalQty %></span>
+                                <% } %>
+                            </li>
                         <% } %>
+
+
                         <% if (isAuthenticated) { %>
+                                <li>
+                                    <a href="/cart" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white" aria-current="page">Cart</a>
+                                    <% if (session.cart) { %>
+                                        <span><%= session.cart.totalQty %></span>
+                                    <% } %>
+                                </li>
                             <li>
                                 <a href="/logout" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white" aria-current="page">
                                     <form action="/logout" method="post">
