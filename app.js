@@ -10,6 +10,7 @@ const MariaDBStore = require('express-session-mariadb-store');
 const csrf = require('csurf');
 const { flash } = require('express-flash-message');
 const fileUpload = require('express-fileupload');
+const nunjucks = require('nunjucks')
 //third-party package import
 
 //imports of my own files
@@ -23,8 +24,13 @@ const authRoutes = require('./src/routes/auth');
 const app = express();
 
 //templating engine setup
-app.set('view engine', 'ejs');
+app.set('view engine', 'njk');
 app.set('views', 'views');
+
+nunjucks.configure('views', {
+    autoescape: true,
+    express: app
+});
 
 
 //body-parser

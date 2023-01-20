@@ -1,7 +1,27 @@
+<!doctype html>
+<html lang="en" class="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Blue Giant Store</title>
+
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class'
+        }
+    </script>
+
+
+    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.5/dist/flowbite.min.css" />
+</head>
 
 <body class="font-mono bg-gradient-to-r from-teal-200 to-lime-200">
-    <header>
 
+    <header>
         <nav class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900">
             <div class="container flex flex-wrap items-center justify-between mx-auto">
                 <a href="/" class="flex items-center">
@@ -14,38 +34,36 @@
                 </button>
                 <div class="hidden w-full md:block md:w-auto" id="navbar-default">
                     <ul class="flex flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-                        <% if (!isAuthenticated) { %>
-                            <li>
-                                <a href="/login" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white" aria-current="page">Login</a>
-                            </li>
-                            <li>
-                                <a href="/sign" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white" aria-current="page">SignUp</a>
-                            </li>
+
+                        {% if isAuthenticated %}
                             <li>
                                 <a href="/cart" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white" aria-current="page">Cart</a>
-                                <% if (session.cart) { %>
-                                    <span><%= session.cart.totalQty %></span>
-                                <% } %>
+                                {% if session.cart %}
+                                <span>{{ session.cart.totalQty }}</span>
+                                {% endif %}
                             </li>
-                        <% } %>
-
-
-                        <% if (isAuthenticated) { %>
-                                <li>
-                                    <a href="/cart" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white" aria-current="page">Cart</a>
-                                    <% if (session.cart) { %>
-                                        <span><%= session.cart.totalQty %></span>
-                                    <% } %>
-                                </li>
                             <li>
                                 <a href="/logout" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white" aria-current="page">
                                     <form action="/logout" method="post">
-                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                        <input type="hidden" name="_csrf" value="{{ csrfToken }}">
                                         <button type="submit">Logout</button>
                                     </form>
                                 </a>
                             </li>
-                        <% } %>
+                            {% else %}
+                                <li>
+                                    <a href="/login" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white" aria-current="page">Login</a>
+                                </li>
+                                <li>
+                                    <a href="/sign" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white" aria-current="page">SignUp</a>
+                                </li>
+                                <li>
+                                    <a href="/cart" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white" aria-current="page">Cart</a>
+                                    {% if session.cart %}
+                                        <span>{{ session.cart.totalQty }}</span>
+                                    {% endif %}
+                                </li>
+                        {% endif %}
                         <li>
                             <a href="/all-product" class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">All Product</a>
                         </li>
@@ -55,14 +73,24 @@
                         <li>
                             <a href="#" class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Pricing</a>
                         </li>
-                        <% if (isAuthenticated) { %>
-                                <li>
-                                    <a href="/add-product" class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Add-Product</a>
-                                </li>
-                        <% } %>
+                        {% if isAuthenticated %}
+                            <li>
+                                <a href="/add-product" class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Add-Product</a>
+                            </li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
         </nav>
+    </header >
 
-    </header>
+    <main>
+        {% block body %}{% endblock %}
+    </main>
+
+    <footer>
+        <script src="https://unpkg.com/flowbite@1.5.5/dist/flowbite.js"></script>
+    </footer>
+
+</body>
+</html>

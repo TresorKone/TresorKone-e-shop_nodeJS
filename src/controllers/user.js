@@ -7,12 +7,12 @@ const { flash } = require('express-flash-message');
 
 exports.getHome = async (req, res, next) => {
     const info = await req.consumeFlash('info');
-    res.render('home', {
+    res.render('other/home', {
         info
 
 
     })
-}
+};
 
 exports.getIndexProduct = async (req, res, next) => {
     const info = await req.consumeFlash('info');
@@ -81,7 +81,10 @@ exports.getCartIndex = (req, res, next) => {
 
     let cart = new Cart(req.session.cart);
     res.render('cart/index', {
-        products: cart.generatedArray,
+        products: cart.generatedArray(),
         totalPrice: cart.totalPrice
     });
-}
+    console.log(cart.generatedArray());
+};
+
+
