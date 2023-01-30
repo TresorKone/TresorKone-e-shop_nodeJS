@@ -16,4 +16,9 @@ router.get('/add-cart/:id', userController.getCart );
 
 router.get('/cart', userController.getCartIndex);
 
+router.get('/checkout', userController.getCheckout);
+
+router.get('/checkout',  userController.postCheckout);
+
+
 module.exports = router;

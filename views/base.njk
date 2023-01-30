@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" class="">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -17,16 +17,18 @@
 
 
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.5/dist/flowbite.min.css" />
+    <script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous" defer></script>
+
 </head>
 
-<body class="font-mono bg-gradient-to-r from-teal-200 to-lime-200">
+<body class="font-mono  dark:bg-gray-900" >
 
-    <header>
-        <nav class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900">
+    <header class="">
+        <nav class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded ">
             <div class="container flex flex-wrap items-center justify-between mx-auto">
                 <a href="/" class="flex items-center">
                     <img src="https://img.icons8.com/external-flat-icons-inmotus-design/67/null/external-melody-saxophone-flat-icons-inmotus-design-2.png" class="h-6 mr-3 sm:h-9" alt="Logo" />
-                    <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Home</span>
+                    <span class="self-center text-xl font-semibold whitespace-nowrap">Home</span>
                 </a>
                 <button data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-default" aria-expanded="false">
                     <span class="sr-only">Open main menu</span>
@@ -39,7 +41,7 @@
                             <li>
                                 <a href="/cart" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white" aria-current="page">Cart</a>
                                 {% if session.cart %}
-                                <span>{{ session.cart.totalQty }}</span>
+                                <span class="inline-flex items-center justify-center w-4 h-4 ml-2 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">{{ session.cart.totalQty }}</span>
                                 {% endif %}
                             </li>
                             <li>
@@ -60,7 +62,7 @@
                                 <li>
                                     <a href="/cart" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white" aria-current="page">Cart</a>
                                     {% if session.cart %}
-                                        <span>{{ session.cart.totalQty }}</span>
+                                        <span class="inline-flex items-center justify-center w-4 h-4 ml-2 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">{{ session.cart.totalQty }}</span>
                                     {% endif %}
                                 </li>
                         {% endif %}
@@ -90,6 +92,7 @@
 
     <footer>
         <script src="https://unpkg.com/flowbite@1.5.5/dist/flowbite.js"></script>
+        {% block footer %}{% endblock %}
     </footer>
 
 </body>
