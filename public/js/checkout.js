@@ -7,7 +7,6 @@ let $form = $('#checkout-form');
 $form.submit((e) => {
     $form.find('button').prop('disable', true);
     Stripe.card.createToken({
-        $('#payment-errors').addClass('hidden');
         number: $('#card-number').val(),
         cvc: $('#card-cvc').val(),
         exp_month: $('#card-expiry-month').val(),
