@@ -7,11 +7,7 @@ const { validationResult } = require('express-validator/check')
 const User = require('../models').User;
 
 //mailer
-const transporter = nodemailer.createTransport(sendgridTransport({
-    auth: {
-        api_key: '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'
-    }
-}));
+
 
 
 exports.getLogin = async (req, res, next) => {
