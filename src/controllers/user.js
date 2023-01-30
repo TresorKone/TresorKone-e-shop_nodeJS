@@ -140,4 +140,10 @@ exports.getCheckout = (req, res, next) => {
 
 exports.postCheckout = (req, res, next) => {
 
+    /*
+     Logic to make charger with the stipe package installed will go here
+     if needed for production
+     */
+
+
 }
