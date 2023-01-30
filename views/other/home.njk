@@ -3,7 +3,31 @@
 {% block body %}
 
     {% if info %}
-        <div>{{ info }}</div>
+        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">{{ info }}</div>
     {% endif %}
+
+    <div class="dark:text-white">
+        <h1 class="text-center">Welcome on Blue Giant Store</h1>
+        <br>
+        <hr>
+        <br>
+        <p>a e-shop website who sell a different type of saxophone online  :</p>
+        <ul class="list-none md:list-none">
+            <br>
+            <li class="mx-4"><span class="animate-ping relative inline-flex rounded-full h-3 w-3 bg-red-400"></span>
+                - This is a e-shop for practice node nodeJs and the framework expressJs <span class="animate-ping relative inline-flex rounded-full h-3 w-3 bg-red-400"></span>
+            </li>
+        </ul>
+
+        <br>
+        <hr>
+        <br>
+
+        <h2 class="text-center">you can take a look to the <a href="/all-product" class="underline decoration-white">product</a> selection for finding your happiness xD</h2>
+        <br>
+        <br>
+    </div>
+
+
 
 {% endblock %}
